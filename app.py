@@ -52,4 +52,4 @@ st.subheader(f"Trading Decision: {decision}")
 
 # Auto-refreshing
 time.sleep(refresh_rate)
-st.experimental_rerun()
+st.rerun()
