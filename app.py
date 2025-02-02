@@ -4,8 +4,8 @@ import pandas as pd
 import time
 
 # Binance API Keys
-API_KEY = "your_api_key"
-API_SECRET = "your_api_secret"
+API_KEY = "l2FduDgvwXVbtPaulJ5SSesoBZvqTlydnGcsZ9jVO6Bh1ssBuWSykCIgdclVE3DD"
+API_SECRET = "979k6kjZ7NT3i0uv1M4eboV3L7yX8OZ9Of5O8FjkmcEQxGDnuykNzmMSkkDkubor"
 
 # Initialize Binance exchange
 exchange = ccxt.binance({
