@@ -71,6 +71,52 @@ def moving_average_strategy(df):
 decision = moving_average_strategy(df)
 st.subheader(f"Moving Avarage Trading Decision: {decision}")
 
+def calculate_rsi(df, period=14):
+    delta = df["close"].diff(1)
+    gain = np.where(delta > 0, delta, 0)
+    loss = np.where(delta < 0, -delta, 0)
+
+    avg_gain = pd.Series(gain).rolling(window=period, min_periods=1).mean()
+    avg_loss = pd.Series(loss).rolling(window=period, min_periods=1).mean()
+
+    rs = avg_gain / (avg_loss + 1e-10)  # Avoid division by zero
+    rsi = 100 - (100 / (1 + rs))
+    
+    return rsi
+
+#RSI decisions
+def trading_decision(df):
+    # Compute Moving Averages
+    df["SMA_5"] = df["close"].rolling(5, min_periods=1).mean()
+    df["SMA_10"] = df["close"].rolling(10, min_periods=1).mean()
+
+    # Compute RSI
+    df["RSI"] = calculate_rsi(df)
+
+    # Moving Average Strategy
+    if df["SMA_5"].iloc[-1] > df["SMA_10"].iloc[-1]:
+        ma_signal = "Buy"
+    elif df["SMA_5"].iloc[-1] < df["SMA_10"].iloc[-1]:
+        ma_signal = "Sell"
+    else:
+        ma_signal = "Hold"
+
+    # RSI Strategy
+    if df["RSI"].iloc[-1] < 30:
+        rsi_signal = "Buy"
+    elif df["RSI"].iloc[-1] > 70:
+        rsi_signal = "Sell"
+    else:
+        rsi_signal = "Hold"
+
+    # Combine Signals
+    if ma_signal == "Buy" and rsi_signal == "Buy":
+        return "Strong Buy Signal"
+    elif ma_signal == "Sell" and rsi_signal == "Sell":
+        return "Strong Sell Signal"
+    else:
+        return "Hold"
+
 # Auto-refreshing
 time.sleep(refresh_rate)
 st.rerun()
