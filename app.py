@@ -69,7 +69,7 @@ def moving_average_strategy(df):
         return "Hold"
 
 decision = moving_average_strategy(df)
-st.subheader(f"Trading Decision: {decision}")
+st.subheader(f"Moving Avarage Trading Decision: {decision}")
 
 # Auto-refreshing
 time.sleep(refresh_rate)
