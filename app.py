@@ -118,6 +118,9 @@ def trading_decision(df):
     else:
         return "Hold"
 
+decisionrsi = trading_decision(df)
+st.subheader(f"RSI Trading Decision: {decisionrsi}")
+
 # Auto-refreshing
 time.sleep(refresh_rate)
 st.rerun()
